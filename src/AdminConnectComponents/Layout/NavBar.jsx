@@ -63,7 +63,7 @@ const NavBar = () => {
 
   return (
     <div className="p-4 bg-orange-light min-w-full mx-auto">
-      <div className="bg-gray-50 min-w-full font-kumbh relative flex flex-col md:flex-row md:flex-shrink justify-between items-center py-3 px-[3rem] border-2 border-btn-yellow rounded-3xl overflow-hidden md:overflow-scroll lg:overflow-visible">
+      <div className="bg-gray-50 min-w-full font-kumbh relative flex flex-col md:flex-row md:flex-shrink justify-between items-center py-3 px-[3rem] border-2 border-btn-yellow rounded-3xl overflow-visible md:overflow-scroll lg:overflow-visible">
         {/* Logo & Title - Always visible */}
         <div className="flex w-full justify-around gap-3 md:gap-0 md:justify-between items-center">
           {/* Logo of NovaNector */}
@@ -244,6 +244,7 @@ const NavBar = () => {
                 className={({ isActive }) =>
                   isActive ? "text-btn-yellow" : "text-black"
                 }
+                onClick={toggleMenu}
               >
                 Home
               </NavLink>
@@ -256,6 +257,7 @@ const NavBar = () => {
                   className={({ isActive }) =>
                     isActive ? "text-btn-yellow" : "text-black"
                   }
+                  onClick={toggleMenu}
                 >
                   Admin Connect
                 </NavLink>
@@ -269,6 +271,7 @@ const NavBar = () => {
                   className={({ isActive }) =>
                     isActive ? "text-btn-yellow" : "text-black"
                   }
+                  onClick={toggleMenu}
                 >
                   Pool Campus
                 </NavLink>
@@ -282,6 +285,7 @@ const NavBar = () => {
                   className={({ isActive }) =>
                     isActive ? "text-btn-yellow" : "text-black"
                   }
+                  onClick={toggleMenu}
                 >
                   About Us
                 </NavLink>
@@ -293,9 +297,12 @@ const NavBar = () => {
                   className={({ isActive }) =>
                     isActive ? "text-btn-yellow" : "text-black"
                   }
+                  onClick={toggleMenu}
                 >
                   About Us
+                  
                 </NavLink>
+                
               </div>
             )}
 
