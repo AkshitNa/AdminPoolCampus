@@ -1,5 +1,5 @@
 # React + Vite
 
-<h3> A Recruiter Landing Page </h3>
+<h3> An Admin-Pool-Connect-Campus </h3>
 
-<a href = "https://novarecruiterpage.netlify.app/"> Recruiter-App </a>  
+<a href = "https://adminpoolconnectcampus.netlify.app/"> AdminPoolCampus-App </a>  

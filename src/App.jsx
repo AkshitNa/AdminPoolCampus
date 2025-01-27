@@ -83,7 +83,6 @@ const router = createBrowserRouter([
         element: (
           <>
             {" "}
-            <p>Courses</p>
             <HomePageImg />
             <TopRank />
             <PrePlacementCourses />
@@ -228,7 +227,6 @@ const router = createBrowserRouter([
         element: (
           <>
             {" "}
-            <p>Pool Connect</p>
             <HomeCampusImg/>
             <AlumniWork/>
             <Drives/>
@@ -248,7 +246,6 @@ const router = createBrowserRouter([
         element: (
           <>
             {" "}
-            <p>Pool Campus Main</p>
             <PoolCampusMain/>
             <AlumniWork/>
             <Drives/>
