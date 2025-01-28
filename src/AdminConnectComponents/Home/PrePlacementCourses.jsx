@@ -110,8 +110,8 @@ export const PrePlacementCourses = () => {
       </p>
 
       {/* Navigation Tabs */}
-      <div className="px-[12rem]">
-        <div className="bg-orange-light flex flex-wrap justify-center gap-3 px-4 font-semibold mt-8 border-b-2 border-gray-500">
+      <div className="px-[2rem] md:px-[12rem]">
+        <div className="bg-orange-light overflow-auto flex flex-wrap justify-center md:flex-row md:justify-center md:flex-wrap gap-[0.1rem] px-4 font-semibold mt-8 border-b-2 border-gray-500">
           {[
             "Popular Programs",
             "Programming Languages",

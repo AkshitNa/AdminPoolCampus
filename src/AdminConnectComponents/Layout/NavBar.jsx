@@ -258,7 +258,7 @@ const NavBar = () => {
               <img
                 src={SearchButton}
                 alt="SearchButton"
-                className="w-6 h-6 sm:w-8 sm:h-8 object-cover mt-1"
+                className="w-10 h-9 mb-[0.2rem]  sm:w-8 sm:h-8 sm:mb-[0rem] object-cover mt-1"
               />
             </div>
           </div>
