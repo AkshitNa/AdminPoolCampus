@@ -66,13 +66,36 @@ export const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li className="text-base sm:text-lg hover:text-gray-300 cursor-pointer">
-                <i className="bi bi-linkedin mr-2"></i>LinkedIn
+                <a
+                  href="https://www.linkedin.com/company/novanectar/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center"
+                >
+                  <i className="bi bi-linkedin mr-2"></i>LinkedIn
+                </a>
               </li>
+
               <li className="text-base sm:text-lg hover:text-gray-300 cursor-pointer">
-                <i className="bi bi-instagram mr-2"></i>Instagram
+                <a
+                  href="https://www.instagram.com/novanectar_services_pvt.ltd/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center"
+                >
+                  <i className="bi bi-instagram mr-2"></i>Instagram
+                </a>
               </li>
+
               <li className="text-base sm:text-lg hover:text-gray-300 cursor-pointer">
-                <i className="bi bi-facebook mr-2"></i>Facebook
+                <a
+                  href="https://m.facebook.com/people/Nova-Nector/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center"
+                >
+                   <i className="bi bi-facebook mr-2"></i>Facebook
+                </a>
               </li>
             </ul>
           </div>

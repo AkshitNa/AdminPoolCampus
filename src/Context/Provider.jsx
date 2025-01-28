@@ -14,8 +14,8 @@ function Provider ({ children }) {
   // Putting various States in the "UserContext" Here::
   const [adminPool, setAdminPool] = useState(false); //01
   const [campusPool, setCampusPool] = useState(false); //02
-  const [username, setUsername] = useState("Akshit"); //03
-  const [password, setPassword] = useState("12345"); //04
+  const [username, setUsername] = useState(""); //03
+  const [password, setPassword] = useState(""); //04
   const [email, setEmail] = useState(""); //05
   const [register, setRegister] = useState(false); //06
   

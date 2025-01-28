@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import LoginImg from "../../assets/LoginImg.png";
 import Google from "../../assets/Google.png";
 import Facebook from "../../assets/Facebook.png";
@@ -12,7 +13,7 @@ const Login = ({ setLogin, setSignUp }) => {
   const loginData = useMyData();
 
   const [formData, setFormData] = useState({
-    fullName: "",
+    username: "",
     email: "",
     password: "",
   });
@@ -24,29 +25,38 @@ const Login = ({ setLogin, setSignUp }) => {
     setError(""); // Clear error when user starts typing
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const { fullName, email, password } = formData;
+    const { username, password } = formData;
 
-    if (!fullName || !email || !password) {
+    if (!username || !password) {
       setError("Please fill out all fields");
       return;
     }
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address");
-      return;
+
+    // Process login form submission
+    try {
+      // Send the username and password to your backend API for login
+      const response = await axios.post(
+        "http://localhost:8080/api/users/login",
+        { username, password }
+      );
+
+      if (response.status === 200) {
+        loginData.setRegister(true); // Mark user as logged in
+        loginData.setUsername(username);
+        loginData.setEmail(formData.email);
+        setLogin(false); // Close the login modal
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        setError("Invalid full name or password.");
+      } else {
+        setError("An error occurred. Please try again later.");
+      }
     }
 
-    if (loginData.username === "Akshit" && loginData.password === "12345") {
-      loginData.setRegister(true);
-      setLogin(false);
-    } else {
-      alert("Wrong Username or Password!!");
-    }
-
-    // Process form submission here
+    // Log the form submission data (for debugging purposes)
     console.log("Form submitted:", formData);
   };
 
@@ -56,7 +66,7 @@ const Login = ({ setLogin, setSignUp }) => {
         {/* Close Button */}
         <button
           onClick={() => setLogin(false)}
-          className="absolute right-[6rem] top-[3.8rem] md:right-4 md:top-[7rem] z-10 text-gray-500 hover:text-gray-700 hover:bg-gray-100 hover:rounded-full p-2"
+          className="absolute right-[6.3rem] top-[0.5rem] md:right-[1.5rem] md:top-[1.5rem] z-10 text-black hover:rounded-full p-1 border-2 border-black rounded-full bg-white"
           aria-label="Close"
         >
           <svg
@@ -73,9 +83,9 @@ const Login = ({ setLogin, setSignUp }) => {
         </button>
 
         {/* NovaNector */}
-        <div className="pl-4 pt-4 md:p-4 text-center">
+        {/* <div className="pl-4 pt-4 md:p-4 text-center">
           <NovaNector />
-        </div>
+        </div> */}
 
         {/* Responsive Grid Container */}
         <div className="grid md:grid-cols-2 grid-cols-1 gap-4 p-4">
@@ -102,10 +112,18 @@ const Login = ({ setLogin, setSignUp }) => {
             {/* Social Login */}
             <div className="flex justify-center space-x-[5rem] -mb-12 md:mb-6 pr-3">
               <div className="bg-white p-3 md:p-3 rounded-lg shadow-sm">
-                <img src={Google} alt="Google" className="w-4 h-4 md:w-6 md:h-6" />
+                <img
+                  src={Google}
+                  alt="Google"
+                  className="w-4 h-4 md:w-6 md:h-6"
+                />
               </div>
               <div className="bg-white p-3 rounded-lg shadow-sm">
-                <img src={Facebook} alt="Facebook" className="w-4 h-4 md:w-6 md:h-6" />
+                <img
+                  src={Facebook}
+                  alt="Facebook"
+                  className="w-4 h-4 md:w-6 md:h-6"
+                />
               </div>
             </div>
 
@@ -115,19 +133,19 @@ const Login = ({ setLogin, setSignUp }) => {
 
             {/* Login Form */}
             <form className="space-y-2 md:space-y-4">
-              {/* Full Name Input */}
+              {/* Username Input */}
               <div>
                 <label
-                  htmlFor="fullName"
+                  htmlFor="username"
                   className="block text-base md:text-lg font-medium text-gray-700 mb-1"
                 >
                   Full Name
                 </label>
                 <input
                   type="text"
-                  id="fullName"
-                  name="fullName"
-                  value={formData.fullName}
+                  id="username"
+                  name="username"
+                  value={formData.username}
                   onChange={handleChange}
                   className="w-full text-base md:text-lg px-2 py-1 md:py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Akshit Nautiyal"
@@ -173,7 +191,6 @@ const Login = ({ setLogin, setSignUp }) => {
               </div>
 
               {/* Login Button */}
-        
               <button
                 type="submit"
                 className="w-full py-2 px-2 md:px-4 bg-btn-yellow text-white text-xs md:text-lg rounded-md hover:opacity-90 transition-opacity"
@@ -182,6 +199,11 @@ const Login = ({ setLogin, setSignUp }) => {
                 Login
               </button>
             </form>
+
+            {/* Error message */}
+            {error && (
+              <div className="text-red-500 text-center mt-2">{error}</div>
+            )}
           </div>
 
           {/* Image Column */}

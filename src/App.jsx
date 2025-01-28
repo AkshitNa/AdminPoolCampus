@@ -1,27 +1,26 @@
-//For Routing
-import {
-  Outlet,
-  RouterProvider,
-  Navigate,
-  createBrowserRouter,
-  ScrollRestoration,
-} from "react-router";
+// App.js
+import { createBrowserRouter, RouterProvider, Outlet, Navigate, ScrollRestoration } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-//Front-Page-Home-Page
-import Home from "./ConnectComponent/Home";
+// Context API
+import { useMyData } from './Context/Provider';
+
+// Front-Page-Home-Page
+import Home from './ConnectComponent/Home';
 
 // Admin-Connect
-import AdminConnectMain from "./AdminConnectComponents/AdminConnectMain";
+import AdminConnectMain from './AdminConnectComponents/AdminConnectMain';
 
 // Campus-Connect
-import PoolCampusMain from "./PoolCampusComponents/PoolCampusMain";
+import PoolCampusMain from './PoolCampusComponents/PoolCampusMain';
 
-//Pages 01
-import {HomeCampusImg, AlumniWork, Drives, AboutCampus} from "./PoolCampusComponents/Home/ZZHomeIndex";
+// Pages 01
+import { HomeCampusImg, AlumniWork, Drives, AboutCampus } from './PoolCampusComponents/Home/ZZHomeIndex';
 
-//Pages 02
-import { Error, Blog, About } from "./AdminConnectComponents/IndexComp";
-import ContactUs from "./AdminConnectComponents/Home/ContactUs";
+// Pages 02
+import { Error, Blog, About } from './AdminConnectComponents/IndexComp';
+import ContactUs from './AdminConnectComponents/Home/ContactUs';
 import {
   Header,
   HomePageImg,
@@ -31,49 +30,48 @@ import {
   ExploreAllCourses,
   ReviewCard,
   ConsultationForm,
-  Footer
-} from "./AdminConnectComponents/Home/ZHomeIndex";
+  Footer,
+} from './AdminConnectComponents/Home/ZHomeIndex';
 
-//CampusBlog
-import { BlogCampus, TipsBlog } from "./PoolCampusComponents/BlogsCampus/indexAI";
+// CampusBlog
+import { BlogCampus, TipsBlog } from './PoolCampusComponents/BlogsCampus/indexAI';
 
 // Languages
-import Profile from "./AdminConnectComponents/Profile";
-import Purchases from "./AdminConnectComponents/Purchases";
-import Languages from "./AdminConnectComponents/Languages";
+import AccountInfo from './AdminConnectComponents/AccountInfo';
+import Profile from './AdminConnectComponents/Profile';
+import Purchases from './AdminConnectComponents/Purchases';
+import Languages from './AdminConnectComponents/Languages';
 
-//Blogs Pages
-import { AIBlog } from "./AdminConnectComponents/Blogs/indexAI";
+// Blogs Pages
+import { AIBlog } from './AdminConnectComponents/Blogs/indexAI';
 
-//Map
-import NovaNectarMap from "./AdminConnectComponents/Home/NovaNectarMap";
+// Map
+import NovaNectarMap from './AdminConnectComponents/Home/NovaNectarMap';
 
-//Toastify
-import { ToastContainer } from "react-toastify";
+// AppLayout Component
+const AppLayout = () => (
+  <div>
+    <ScrollRestoration /> {/* To get to top */}
+    <Header />
+    <ToastContainer position="top-center" draggable={true} toastStyle={{ marginTop: '100px' }} />
+    <main>
+      <Outlet /> {/* Populate our other pages and components */}
+    </main>
+    <Footer />
+  </div>
+);
 
-//AppLayout
-const AppLayout = () => {
-  return (
-    <div>
-      <ScrollRestoration /> {/* To get to top */}
-      <Header />
-      <ToastContainer
-        position="top-center"
-        draggable={true}
-        toastStyle={{ marginTop: "100px" }}
-      />
-      <main>
-        <Outlet /> {/* Populate our other pages and components */}
-      </main>
-      <Footer />
-    </div>
-  );
-};
+//Protected Routes
+const ProtectedRoute = ({children}) => {
+  const authorization = useMyData();
+  return authorization.register ? children : <Navigate to="/" />;
+  };
 
+// Router Configuration
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home/>
+    element: <Home />,
   },
   {
     path: "/AdminConnect",
@@ -87,7 +85,7 @@ const router = createBrowserRouter([
             <HomePageImg />
             <TopRank />
             <PrePlacementCourses />
-            <Industry/>
+            <Industry />
             <ReviewCard />
           </>
         ),
@@ -102,7 +100,7 @@ const router = createBrowserRouter([
         path: "/exploreAllCourses",
         element: (
           <>
-            <ExploreAllCourses/>
+            <ExploreAllCourses />
           </>
         ),
       },
@@ -117,10 +115,10 @@ const router = createBrowserRouter([
         element: (
           <>
             {" "}
-            <AdminConnectMain/>
+            <AdminConnectMain />
             <TopRank />
             <PrePlacementCourses />
-            <ConsultationForm/>
+            <ConsultationForm />
           </>
         ),
       },
@@ -188,17 +186,22 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/Userprofile",
+    path: "/UserAccountInfo",
     element: <AppLayout />,
     children: [
       {
-        path: "/Userprofile",
-        element: (
-          <>
-            {" "}
-           <Profile/>
-          </>
-        ),
+        path: "/UserAccountInfo",
+        element: <> <ProtectedRoute> <AccountInfo/> </ProtectedRoute>  </> 
+      },
+    ],
+  },
+  {
+    path: "/UserEditprofile",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/UserEditprofile",
+        element: <> <ProtectedRoute> <Profile/> </ProtectedRoute>  </> 
       },
     ],
   },
@@ -211,7 +214,7 @@ const router = createBrowserRouter([
         element: (
           <>
             {" "}
-           <Purchases/>
+            <> <ProtectedRoute> <Purchases /> </ProtectedRoute>  </>
           </>
         ),
       },
@@ -226,7 +229,7 @@ const router = createBrowserRouter([
         element: (
           <>
             {" "}
-            <Languages/>
+            <ProtectedRoute> <Languages /> </ProtectedRoute> 
           </>
         ),
       },
@@ -242,10 +245,10 @@ const router = createBrowserRouter([
         element: (
           <>
             {" "}
-            <HomeCampusImg/>
-            <AlumniWork/>
-            <Drives/>
-            <Industry/>
+            <HomeCampusImg />
+            <AlumniWork />
+            <Drives />
+            <Industry />
             <ReviewCard />
           </>
         ),
@@ -261,10 +264,10 @@ const router = createBrowserRouter([
         element: (
           <>
             {" "}
-            <PoolCampusMain/>
-            <AlumniWork/>
-            <Drives/>
-            <ConsultationForm/>
+            <PoolCampusMain />
+            <AlumniWork />
+            <Drives />
+            <ConsultationForm />
           </>
         ),
       },
@@ -284,42 +287,45 @@ const router = createBrowserRouter([
         ),
       },
     ],
-  },{
-  path: "/blogCampus",
-  element: <AppLayout />,
-  children: [
-    {
-      path: "/blogCampus",
-      element: (
-        <>
-          {" "}
-          <BlogCampus/>
-        </>
-      ),
-    },
-  ],
-},
-{
-  path: "/TipsBlog",
-  element: <AppLayout />,
-  children: [
-    {
-      path: "/TipsBlog",
-      element: (
-        <>
-          {" "}
-          <AIBlog />
-        </>
-      ),
-    },
-  ],
-},
+  },
+  {
+    path: "/blogCampus",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/blogCampus",
+        element: (
+          <>
+            {" "}
+            <BlogCampus />
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/TipsBlog",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/TipsBlog",
+        element: (
+          <>
+            {" "}
+            <AIBlog />
+          </>
+        ),
+      },
+    ],
+  },
   {
     path: "*",
     element: <Error />,
   },
 ]);
 
+
+// Main App Component
 function App() {
   return <RouterProvider router={router} />;
 }

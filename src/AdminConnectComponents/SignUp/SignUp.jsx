@@ -1,31 +1,18 @@
 import { useState } from "react";
+import axios from "axios";
 import SignUpuser from "../../assets/SignUpuser.png";
 import Google from "../../assets/Google.png";
 import Facebook from "../../assets/Facebook.png";
-
-// Context
-import { useMyData } from "../../Context/Provider";
 import NovaNector from "../Layout/NovaNector";
 
 const SignUp = ({ setSignUp, setLogin }) => {
-  // Context Values
-  const {
-    username,
-    setUsername,
-    password,
-    setPassword,
-    email,
-    setEmail,
-    register,
-    setRegister,
-  } = useMyData();
-
   const [formData, setFormData] = useState({
-    fullName: "",
+    username: "",
     email: "",
     password: "",
   });
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,11 +20,11 @@ const SignUp = ({ setSignUp, setLogin }) => {
     setError(""); // Clear error when user starts typing
   };
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    const { fullName, email, password } = formData;
+    const { username, email, password } = formData;
 
-    if (!fullName || !email || !password) {
+    if (!username || !email || !password) {
       setError("Please fill out all fields");
       return;
     }
@@ -49,13 +36,24 @@ const SignUp = ({ setSignUp, setLogin }) => {
       return;
     }
 
-    //Setting FullName, Email and Password
-    setUsername(fullName);
-    setEmail(email);
-    setPassword(password);
+    try {
+      const response = await axios.post("http://localhost:8080/api/users/register", {
+        username,
+        email,
+        password,
+      });
 
-    // Process form submission here
-    console.log("Form submitted:", formData);
+      if (response.status === 200) {
+        setSuccessMessage("User registered successfully");
+        setFormData({
+          username: "",
+          email: "",
+          password: "",
+        });
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to register");
+    }
   };
 
   return (
@@ -64,7 +62,7 @@ const SignUp = ({ setSignUp, setLogin }) => {
         {/* Close Button */}
         <button
           onClick={() => setSignUp(false)}
-          className="absolute right-[6rem] top-[3.8rem] md:right-4 md:top-[7rem] z-10 text-gray-500 hover:text-gray-700 hover:bg-gray-100 hover:rounded-full p-2"
+          className="absolute right-[6.3rem] top-[0.5rem] md:right-[1.5rem] md:top-[1.5rem] z-10 text-black hover:rounded-full p-1 border-2 border-black rounded-full bg-white"
           aria-label="Close"
         >
           <svg
@@ -81,9 +79,9 @@ const SignUp = ({ setSignUp, setLogin }) => {
         </button>
 
         {/* NovaNector */}
-        <div className="pl-4 pt-4 md:p-4 text-center">
+        {/* <div className="pl-4 pt-4 md:p-4 text-center">
           <NovaNector />
-        </div>
+        </div> */}
 
         {/* Responsive Grid Container */}
         <div className="grid md:grid-cols-2 grid-cols-1 gap-4 p-4">
@@ -129,21 +127,21 @@ const SignUp = ({ setSignUp, setLogin }) => {
               <p className="text-gray-500">----------- or -------------</p>
             </div>
 
-            {/* Login Form */}
+            {/* Signup Form */}
             <form className="space-y-2 md:space-y-4">
               {/* Full Name Input */}
               <div>
                 <label
-                  htmlFor="fullName"
+                  htmlFor="username"
                   className="block text-base md:text-lg font-medium text-gray-700 mb-1"
                 >
                   Full Name
                 </label>
                 <input
                   type="text"
-                  id="fullName"
-                  name="fullName"
-                  value={formData.fullName}
+                  id="username"
+                  name="username"
+                  value={formData.username}
                   onChange={handleChange}
                   className="w-full text-base md:text-lg px-2 py-1 md:py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Akshit Nautiyal"
@@ -188,8 +186,19 @@ const SignUp = ({ setSignUp, setLogin }) => {
                 />
               </div>
 
-              {/* Login Button */}
+              {/* Error Message */}
+              {error && (
+                <p className="text-red-500 text-xs md:text-sm">{error}</p>
+              )}
 
+              {/* Success Message */}
+              {successMessage && (
+                <p className="text-green-500 text-xs md:text-sm">
+                  {successMessage}
+                </p>
+              )}
+
+              {/* Signup Button */}
               <button
                 type="submit"
                 className="w-full py-2 px-2 md:px-4 bg-btn-yellow text-white text-xs md:text-lg rounded-md hover:opacity-90 transition-opacity"

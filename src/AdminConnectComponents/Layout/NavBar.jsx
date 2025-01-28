@@ -83,7 +83,7 @@ const NavBar = () => {
   return (
     <div
       className={`p-4 bg-orange-light min-w-full mx-auto ${
-        isSticky ? "sticky top-0 bg-orange-light z-20" : ""
+        isSticky ? "sticky top-0 bg-orange-light z-50" : ""
       }`}
     >
       <div
@@ -154,14 +154,27 @@ const NavBar = () => {
                 </div>
 
                 {showMobileProfileBar && (
-                  <div className="absolute top-12 right-8 z-60 mt-2 py-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100">
+                  <div className="absolute top-12 right-8 z-50 mt-2 py-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100">
                     <div className="flex flex-col font-semibold">
-                      <p className="px-4 py-2 text-sm hover:bg-gray-100 hover:text-btn-yellow">
+                   
+                      <NavLink
+                        to="/UserAccountInfo"
+                        className={({ isActive }) =>
+                          `${
+                            isActive
+                              ? "text-btn-yellow"
+                              : "text-black hover:text-btn-yellow"
+                          } px-4 py-2 text-sm`
+                        }
+                        onClick={() => {
+                          setShowMobileProfileBar(false);
+                        }}
+                      >
                         Hii, {navBarData.username} 😊
-                      </p>
+                      </NavLink>
 
                       <NavLink
-                        to="/Userprofile"
+                        to="/UserEditprofile"
                         className={({ isActive }) =>
                           `${
                             isActive
@@ -209,7 +222,7 @@ const NavBar = () => {
                       </NavLink>
 
                       <p
-                        className="px-4 py-2 text-sm hover:bg-gray-100 hover:text-btn-yellow"
+                        className="px-4 py-2 text-sm hover:bg-gray-100 hover:text-btn-yellow cursor-pointer"
                         onClick={() => {
                           navBarData.setRegister(false);
                         }}
@@ -416,7 +429,11 @@ const NavBar = () => {
               <div className="hidden sm:block">
                 <div className="flex items-center gap-4">
                   <div>
-                    <img src={Bell} alt="Bell" className="w-12 h-8 md:w-12 md:h-8 lg:w-14 lg:h-10 xl:w-12 xl:h-8" />
+                    <img
+                      src={Bell}
+                      alt="Bell"
+                      className="w-12 h-8 md:w-12 md:h-8 lg:w-14 lg:h-10 xl:w-12 xl:h-8"
+                    />
                   </div>
                   <div ref={dropdownRef}>
                     <img
@@ -432,12 +449,25 @@ const NavBar = () => {
                   {showDesktopProfileBar && (
                     <div className="absolute top-full right-0 z-60 mt-2 py-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100">
                       <div className="flex flex-col font-semibold">
-                        <p className="px-4 py-2 text-sm hover:bg-gray-100 hover:text-btn-yellow">
-                          Hii, {navBarData.username} 😊
-                        </p>
+                     
+                        <NavLink
+                        to="/UserAccountInfo"
+                        className={({ isActive }) =>
+                          `${
+                            isActive
+                              ? "text-btn-yellow"
+                              : "text-btn-green hover:text-btn-yellow"
+                          } px-4 py-2 text-sm`
+                        }
+                        onClick={() => {
+                          setShowDesktopProfileBar(false);
+                        }}
+                      >
+                        Hii, {navBarData.username} 😊
+                      </NavLink>
 
                         <NavLink
-                          to="/Userprofile"
+                          to="/UserEditprofile"
                           className={({ isActive }) =>
                             `${
                               isActive
@@ -485,7 +515,7 @@ const NavBar = () => {
                         </NavLink>
 
                         <p
-                          className="px-4 py-2 text-sm hover:bg-gray-100 hover:text-btn-yellow"
+                          className="px-4 py-2 text-sm hover:bg-gray-100 hover:text-btn-yellow cursor-pointer"
                           onClick={() => {
                             navBarData.setRegister(false);
                           }}
