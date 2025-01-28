@@ -49,7 +49,7 @@ export const HomePageImg = () => {
               className="h-48 sm:h-64 md:h-72 lg:h-80 object-contain"
             />
           </div>
-          <div className="absolute top-[15rem] right-[2rem] md:top-[25rem] md:right-[13rem] z-auto">
+          <div className="absolute top-[15rem] right-[2rem] md:top-[25rem] md:right-[13rem]">
             <EnrollStudents />
           </div>
 

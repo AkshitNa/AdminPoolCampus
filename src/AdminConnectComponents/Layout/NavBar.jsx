@@ -88,7 +88,7 @@ const NavBar = () => {
     >
       <div
         className={
-          "bg-gray-50 min-w-full font-kumbh relative flex flex-col md:flex-row md:flex-shrink justify-between items-center py-3 px-[3rem] border-2 border-btn-yellow rounded-3xl overflow-visible md:overflow-scroll lg:overflow-visible"
+          "bg-gray-50 min-w-full font-kumbh relative flex flex-col md:flex-row md:flex-shrink justify-between items-center py-3 px-[3rem] border-2 border-btn-yellow rounded-3xl overflow-visible md:overflow-scroll lg:overflow-visible z-50"
         }
       >
         {/* Logo & Title - Always visible */}

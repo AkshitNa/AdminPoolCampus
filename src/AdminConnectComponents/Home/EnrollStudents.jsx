@@ -9,9 +9,9 @@ const EnrollStudents = () => {
   const studentImages = [Student01, Student02, Student03, Student04];
 
   return (
-    <div className="bg-white py-1 px-2 rounded-2xl shadow-lg min-w-[5rem] text-center border">
+    <div className="relative bg-white py-1 px-2 rounded-2xl shadow-lg min-w-[5rem] text-center border">
       {/* Top Icon */}
-      <div className="relative">
+      <div>
         <div className="flex justify-center mb-2">
           <img
             src={EnrollUser}
