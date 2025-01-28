@@ -28,6 +28,7 @@ import {
   TopRank,
   Industry,
   PrePlacementCourses,
+  ExploreAllCourses,
   ReviewCard,
   ConsultationForm,
   Footer
@@ -88,6 +89,20 @@ const router = createBrowserRouter([
             <PrePlacementCourses />
             <Industry/>
             <ReviewCard />
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/exploreAllCourses",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/exploreAllCourses",
+        element: (
+          <>
+            <ExploreAllCourses/>
           </>
         ),
       },

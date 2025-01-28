@@ -18,6 +18,9 @@ const NavBar = () => {
   // Context Values
   const navBarData = useMyData();
 
+  // State to manage sticky navbar
+  const [isSticky, setIsSticky] = useState(false);
+
   // Show Profile Drop Down Bar
   const [showMobileProfileBar, setShowMobileProfileBar] = useState(false);
   const [showDesktopProfileBar, setShowDesktopProfileBar] = useState(false);
@@ -41,6 +44,22 @@ const NavBar = () => {
     setArrow(!arrow);
   };
 
+  // Handle sticky navbar effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsSticky(true); // Make navbar sticky after scrolling 50px
+      } else {
+        setIsSticky(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -62,8 +81,16 @@ const NavBar = () => {
   }, []);
 
   return (
-    <div className="p-4 bg-orange-light min-w-full mx-auto">
-      <div className="bg-gray-50 min-w-full font-kumbh relative flex flex-col md:flex-row md:flex-shrink justify-between items-center py-3 px-[3rem] border-2 border-btn-yellow rounded-3xl overflow-visible md:overflow-scroll lg:overflow-visible">
+    <div
+      className={`p-4 bg-orange-light min-w-full mx-auto ${
+        isSticky ? "sticky top-0 bg-orange-light z-20" : ""
+      }`}
+    >
+      <div
+        className={
+          "bg-gray-50 min-w-full font-kumbh relative flex flex-col md:flex-row md:flex-shrink justify-between items-center py-3 px-[3rem] border-2 border-btn-yellow rounded-3xl overflow-visible md:overflow-scroll lg:overflow-visible"
+        }
+      >
         {/* Logo & Title - Always visible */}
         <div className="flex w-full justify-around gap-3 md:gap-0 md:justify-between items-center">
           {/* Logo of NovaNector */}
@@ -146,7 +173,7 @@ const NavBar = () => {
                           setShowMobileProfileBar(false);
                         }}
                       >
-                        Profile
+                        Edit Profile
                       </NavLink>
 
                       <NavLink
@@ -300,9 +327,7 @@ const NavBar = () => {
                   onClick={toggleMenu}
                 >
                   About Us
-                  
                 </NavLink>
-                
               </div>
             )}
 
@@ -391,13 +416,13 @@ const NavBar = () => {
               <div className="hidden sm:block">
                 <div className="flex items-center gap-4">
                   <div>
-                    <img src={Bell} alt="Bell" className="w-12 h-8" />
+                    <img src={Bell} alt="Bell" className="w-12 h-8 md:w-12 md:h-8 lg:w-14 lg:h-10 xl:w-12 xl:h-8" />
                   </div>
                   <div ref={dropdownRef}>
                     <img
                       src={LoginUser}
                       alt="LoginUser"
-                      className="w-12 h-8 cursor-pointer"
+                      className="w-12 h-8 md:w-12 md:h-8 lg:w-14 lg:h-10 xl:w-11 xl:h-8 cursor-pointer"
                       onClick={() =>
                         setShowDesktopProfileBar(!showDesktopProfileBar)
                       }
@@ -424,7 +449,7 @@ const NavBar = () => {
                             setShowDesktopProfileBar(false);
                           }}
                         >
-                          Profile
+                          Edit Profile
                         </NavLink>
 
                         <NavLink

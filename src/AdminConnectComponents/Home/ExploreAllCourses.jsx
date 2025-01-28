@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Placement01 from "../../assets/Courses/Placement01.png";
 import Placement02 from "../../assets/Courses/Placement02.png";
 import Placement03 from "../../assets/Courses/Placement03.png";
@@ -9,10 +7,9 @@ import Placement06 from "../../assets/Courses/Placement06.png";
 import Placement07 from "../../assets/Courses/Placement07.png";
 import Placement08 from "../../assets/Courses/Placement08.png";
 
-export const PrePlacementCourses = () => {
- 
-  const navigate = useNavigate();
+import React, { useState } from "react";
 
+export const ExploreAllCourses = () => {
   // State to manage the active category
   const [activeCategory, setActiveCategory] = useState("Popular Programs");
 
@@ -40,7 +37,7 @@ export const PrePlacementCourses = () => {
       id: 3,
       category: "Web Development",
       title: "JavaScript Basic from Scratch",
-      image: Placement03,
+      image: Placement02,
       learners: "40.6k+ learners",
       duration: "1 Year",
       isPopular: true,
@@ -49,7 +46,7 @@ export const PrePlacementCourses = () => {
       id: 4,
       category: "Cloud Computing",
       title: "Cloud Computing Essentials",
-      image: Placement04,
+      image: Placement06,
       learners: "12.5k+ learners",
       duration: "6 Months",
       isPopular: false,
@@ -90,23 +87,91 @@ export const PrePlacementCourses = () => {
       duration: "5 Months",
       isPopular: false,
     },
+    {
+      id: 9,
+      category: "Web Development",
+      title: "React.js Advanced Concepts",
+      image: Placement01,
+      learners: "22.9k+ learners",
+      duration: "3 Months",
+      isPopular: true,
+    },
+    {
+      id: 10,
+      category: "Cloud Computing",
+      title: "Introduction to Google Cloud Platform",
+      image: Placement02,
+      learners: "10.4k+ learners",
+      duration: "4 Months",
+      isPopular: false,
+    },
+    {
+      id: 11,
+      category: "Data Science And Machine Learning",
+      title: "Deep Learning Essentials",
+      image: Placement03,
+      learners: "18.9k+ learners",
+      duration: "8 Months",
+      isPopular: true,
+    },
+    {
+      id: 12,
+      category: "Cybersecurity",
+      title: "Cybersecurity Fundamentals",
+      image: Placement04,
+      learners: "29.6k+ learners",
+      duration: "6 Months",
+      isPopular: true,
+    },
+    {
+      id: 13,
+      category: "Web Development",
+      title: "CSS and Flexbox Mastery",
+      image: Placement05,
+      learners: "35.2k+ learners",
+      duration: "2 Months",
+      isPopular: false,
+    },
+    {
+      id: 14,
+      category: "Cloud Computing",
+      title: "Azure Administration Basics",
+      image: Placement06,
+      learners: "14.3k+ learners",
+      duration: "5 Months",
+      isPopular: false,
+    },
+    {
+      id: 15,
+      category: "Data Science And Machine Learning",
+      title: "Python for Data Analysis",
+      image: Placement07,
+      learners: "49.5k+ learners",
+      duration: "10 Months",
+      isPopular: true,
+    },
+    {
+      id: 16,
+      category: "Cybersecurity",
+      title: "Penetration Testing with Kali Linux",
+      image: Placement08,
+      learners: "21.4k+ learners",
+      duration: "7 Months",
+      isPopular: false,
+    },
   ];
 
   // Filtered courses based on the active category
-  const filteredCourses = 
+  const filteredCourses =
     activeCategory === "Popular Programs"
       ? courses.filter((course) => course.isPopular)
       : courses.filter((course) => course.category === activeCategory);
-
-  const handleExploreAllCourses = () => {
-    navigate("/exploreAllCourses");
-  };
 
   return (
     <div className="bg-orange-light">
       {/* Title */}
       <p className="text-center font-lato text-3xl sm:text-4xl md:text-5xl font-semibold pt-5">
-        Preplacement <span className="text-btn-green">Courses</span>
+        <span className="text-btn-green">All Available Courses</span>
       </p>
 
       {/* Navigation Tabs */}
@@ -138,7 +203,10 @@ export const PrePlacementCourses = () => {
       {/* Cards */}
       <div className="bg-orange-light grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-10 px-6">
         {filteredCourses.map((course) => (
-          <div key={course.id} className="bg-white border-2 border-btn-green rounded-3xl">
+          <div
+            key={course.id}
+            className="bg-white border-2 border-btn-green rounded-3xl"
+          >
             <div>
               <img
                 src={course.image}
@@ -166,16 +234,6 @@ export const PrePlacementCourses = () => {
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Explore All Button */}
-      <div className="flex justify-center pb-5">
-        <button
-          className="bg-white font-lato p-2 px-6 font-semibold border-2 border-black rounded-lg"
-          onClick={handleExploreAllCourses}
-        >
-          Explore All <i className="bi bi-arrow-right font-bold"></i>
-        </button>
       </div>
     </div>
   );
