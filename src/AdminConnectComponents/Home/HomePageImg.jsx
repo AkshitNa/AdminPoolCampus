@@ -50,19 +50,24 @@ export const HomePageImg = () => {
                 </div>
 
                 {/* Center Image */}
-                <div className="relative col-span-1 flex justify-center">
+                <div className="relative col-span-1 flex justify-center pl-[4rem] md:pl-0">
                   <img
                     src={student}
                     alt="Student"
                     className="max-w-[25rem] h-56 sm:h-72 md:h-96 lg:h-[28rem] xl:h-[24rem] object-cover"
                   />
 
-                  <img src={Dots2} alt="Dots 2 Horizontal" className="w-[4rem] h-[4rem]" />
+                    <img
+                      src={Dots2}
+                      alt="Dots 2 Horizontal"
+                      className="w-[2rem] h-[2rem]"
+                    />
+                 
                 </div>
 
                 {/* Right Image */}
                 <div className="relative col-span-1 flex justify-center z-10">
-                  <div className="transform -translate-x-1/2 translate-y-1/2 md:translate-x-1/5 md:translate-y-1/2 lg:translate-x-1/3 lg:translate-y-1/5 xl:-translate-x-1/2 xl:translate-y-1/2 2xl:-translate-x-[7rem] 2xl:translate-y-[5rem]">
+                  <div className="transform -translate-x-1/5 translate-y-1/2 md:translate-x-1/5 md:translate-y-1/2 lg:translate-x-1/3 lg:translate-y-1/5 xl:-translate-x-1/2 xl:translate-y-1/2 2xl:-translate-x-[7rem] 2xl:translate-y-[5rem]">
                     <EnrollStudents />
                   </div>
                 </div>
