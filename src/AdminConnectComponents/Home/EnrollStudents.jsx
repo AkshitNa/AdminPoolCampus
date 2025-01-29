@@ -31,7 +31,7 @@ const EnrollStudents = () => {
               key={index}
               src={src}
               alt={`Student ${index + 1}`}
-              className="w-6 h-6 md:w-9 md:h-8 rounded-full border-2 border-white"
+              className="w-6 h-6 md:w-8 md:h-8 rounded-full border-2 border-white"
             />
           ))}
         </div>
