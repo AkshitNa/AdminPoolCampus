@@ -62,7 +62,7 @@ const HomeCards = () => {
       </div>
 
       <div>
-        <img src={SquareDouble} alt="Square-Double" className="w-14 h-8 md:w-[8rem] md:h-[8rem]"/>
+        <img src={SquareDouble} alt="Square-Double" className="pt-1 w-14 h-9 md:w-[8rem] md:h-[8rem]"/>
       </div>
     </div>
   );
