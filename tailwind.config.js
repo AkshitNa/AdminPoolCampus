@@ -26,9 +26,13 @@ module.exports = {
         'form-light-black': '#040404'
       },
       screens: {
+        'vvvs': '375px',
+        'vvs': '340px', // Custom breakpoint
         'ssm': '921px', // Custom breakpoint
         'mdx': '700px',
         'csm': '765px', // Custom breakpoint
+        "3xl": "1800px", // Custom 3xl breakpoint
+        "4xl": "2200px", // Custom 4xl breakpoint
       },
     },
   },
