@@ -57,12 +57,12 @@ const SignUp = ({ setSignUp, setLogin }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center font-kumbh">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center font-kumbh z-50">
       <div className="bg-orange-circle rounded-lg shadow-xl w-full max-w-4xl relative">
         {/* Close Button */}
         <button
           onClick={() => setSignUp(false)}
-          className="absolute right-[6.3rem] top-[0.5rem] md:right-[1.5rem] md:top-[1.5rem] z-10 text-black hover:rounded-full p-1 border-2 border-black rounded-full bg-white"
+          className="absolute right-[6.3rem] top-[0.5rem] md:right-[1.5rem] md:top-[1.5rem] z-50 text-black hover:rounded-full p-1 border-2 border-black rounded-full bg-white"
           aria-label="Close"
         >
           <svg

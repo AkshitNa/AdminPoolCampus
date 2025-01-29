@@ -14,7 +14,7 @@ import Rank05 from "../../assets/TopRankInstitution/Rank05.png";
 
 export const TopRank = () => {
   return (
-    <div className="py-20 px-4 sm:px-8 lg:px-14 bg-orange-light">
+    <div className="py-20 px-4 sm:px-8 lg:px-14 bg-orange-light z-10">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl text-black text-center mb-8 sm:mb-12 font-semibold">
           Learn From Top Ranked{" "}

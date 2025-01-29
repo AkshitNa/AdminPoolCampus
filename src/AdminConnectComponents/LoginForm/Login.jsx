@@ -61,7 +61,7 @@ const Login = ({ setLogin, setSignUp }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center font-kumbh">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center font-kumbh z-60">
       <div className="bg-orange-circle rounded-lg shadow-xl w-full max-w-4xl relative">
         {/* Close Button */}
         <button

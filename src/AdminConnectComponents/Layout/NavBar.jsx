@@ -83,12 +83,12 @@ const NavBar = () => {
   return (
     <div
       className={`p-4 bg-orange-light min-w-full mx-auto ${
-        isSticky ? "sticky top-0 bg-orange-light z-50" : ""
+        isSticky ? "sticky top-0 bg-orange-light z-20" : ""
       }`}
     >
       <div
         className={
-          "bg-gray-50 min-w-full font-kumbh relative flex flex-col md:flex-row md:flex-shrink justify-between items-center py-3 px-[3rem] border-2 border-btn-yellow rounded-3xl overflow-visible md:overflow-scroll lg:overflow-visible z-50"
+          "bg-gray-50 min-w-full font-kumbh relative flex flex-col md:flex-row md:flex-shrink justify-between items-center py-3 px-[3rem] border-2 border-btn-yellow rounded-3xl overflow-visible md:overflow-scroll lg:overflow-visible z-20"
         }
       >
         {/* Logo & Title - Always visible */}
@@ -154,7 +154,7 @@ const NavBar = () => {
                 </div>
 
                 {showMobileProfileBar && (
-                  <div className="absolute top-12 right-8 z-50 mt-2 py-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100">
+                  <div className="absolute top-12 right-8 z-40 mt-2 py-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100">
                     <div className="flex flex-col font-semibold">
                    
                       <NavLink
@@ -447,7 +447,7 @@ const NavBar = () => {
                   </div>
 
                   {showDesktopProfileBar && (
-                    <div className="absolute top-full right-0 z-60 mt-2 py-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100">
+                    <div className="absolute top-full right-0 z-40 mt-2 py-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100">
                       <div className="flex flex-col font-semibold">
                      
                         <NavLink
