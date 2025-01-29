@@ -1,26 +1,37 @@
 // App.js
-import { createBrowserRouter, RouterProvider, Outlet, Navigate, ScrollRestoration } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  Navigate,
+  ScrollRestoration,
+} from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Context API
-import { useMyData } from './Context/Provider';
+import { useMyData } from "./Context/Provider";
 
 // Front-Page-Home-Page
-import Home from './ConnectComponent/Home';
+import Home from "./ConnectComponent/Home";
 
 // Admin-Connect
-import AdminConnectMain from './AdminConnectComponents/AdminConnectMain';
+import AdminConnectMain from "./AdminConnectComponents/AdminConnectMain";
 
 // Campus-Connect
-import PoolCampusMain from './PoolCampusComponents/PoolCampusMain';
+import PoolCampusMain from "./PoolCampusComponents/PoolCampusMain";
 
 // Pages 01
-import { HomeCampusImg, AlumniWork, Drives, AboutCampus } from './PoolCampusComponents/Home/ZZHomeIndex';
+import {
+  HomeCampusImg,
+  AlumniWork,
+  Drives,
+  AboutCampus,
+} from "./PoolCampusComponents/Home/ZZHomeIndex";
 
 // Pages 02
-import { Error, Blog, About } from './AdminConnectComponents/IndexComp';
-import ContactUs from './AdminConnectComponents/Home/ContactUs';
+import { Error, Blog, About } from "./AdminConnectComponents/IndexComp";
+import ContactUs from "./AdminConnectComponents/Home/ContactUs";
 import {
   Header,
   HomePageImg,
@@ -31,29 +42,36 @@ import {
   ReviewCard,
   ConsultationForm,
   Footer,
-} from './AdminConnectComponents/Home/ZHomeIndex';
+} from "./AdminConnectComponents/Home/ZHomeIndex";
 
 // CampusBlog
-import { BlogCampus, TipsBlog } from './PoolCampusComponents/BlogsCampus/indexAI';
+import {
+  BlogCampus,
+  TipsBlog,
+} from "./PoolCampusComponents/BlogsCampus/indexAI";
 
 // Languages
-import AccountInfo from './AdminConnectComponents/AccountInfo';
-import Profile from './AdminConnectComponents/Profile';
-import Purchases from './AdminConnectComponents/Purchases';
-import Languages from './AdminConnectComponents/Languages';
+import Profile from "./AdminConnectComponents/Profile";
+import EditProfile from "./AdminConnectComponents/EditProfile";
+import Purchases from "./AdminConnectComponents/Purchases";
+import Languages from "./AdminConnectComponents/Languages";
 
 // Blogs Pages
-import { AIBlog } from './AdminConnectComponents/Blogs/indexAI';
+import { AIBlog } from "./AdminConnectComponents/Blogs/indexAI";
 
 // Map
-import NovaNectarMap from './AdminConnectComponents/Home/NovaNectarMap';
+import NovaNectarMap from "./AdminConnectComponents/Home/NovaNectarMap";
 
 // AppLayout Component
 const AppLayout = () => (
   <div>
     <ScrollRestoration /> {/* To get to top */}
     <Header />
-    <ToastContainer position="top-center" draggable={true} toastStyle={{ marginTop: '100px' }} />
+    <ToastContainer
+      position="top-center"
+      draggable={true}
+      toastStyle={{ marginTop: "100px" }}
+    />
     <main>
       <Outlet /> {/* Populate our other pages and components */}
     </main>
@@ -62,10 +80,10 @@ const AppLayout = () => (
 );
 
 //Protected Routes
-const ProtectedRoute = ({children}) => {
+const ProtectedRoute = ({ children }) => {
   const authorization = useMyData();
   return authorization.register ? children : <Navigate to="/" />;
-  };
+};
 
 // Router Configuration
 const router = createBrowserRouter([
@@ -186,12 +204,20 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/UserAccountInfo",
+    path: "/userProfile",
     element: <AppLayout />,
     children: [
       {
-        path: "/UserAccountInfo",
-        element: <> <ProtectedRoute> <AccountInfo/> </ProtectedRoute>  </> 
+        path: "/userProfile",
+        element: (
+          <>
+            {" "}
+            <ProtectedRoute>
+              {" "}
+              <Profile />{" "}
+            </ProtectedRoute>{" "}
+          </>
+        ),
       },
     ],
   },
@@ -201,7 +227,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/UserEditprofile",
-        element: <> <ProtectedRoute> <Profile/> </ProtectedRoute>  </> 
+        element: (
+          <>
+            {" "}
+            <ProtectedRoute>
+              {" "}
+              <EditProfile />{" "}
+            </ProtectedRoute>{" "}
+          </>
+        ),
       },
     ],
   },
@@ -214,7 +248,13 @@ const router = createBrowserRouter([
         element: (
           <>
             {" "}
-            <> <ProtectedRoute> <Purchases /> </ProtectedRoute>  </>
+            <>
+              {" "}
+              <ProtectedRoute>
+                {" "}
+                <Purchases />{" "}
+              </ProtectedRoute>{" "}
+            </>
           </>
         ),
       },
@@ -229,7 +269,10 @@ const router = createBrowserRouter([
         element: (
           <>
             {" "}
-            <ProtectedRoute> <Languages /> </ProtectedRoute> 
+            <ProtectedRoute>
+              {" "}
+              <Languages />{" "}
+            </ProtectedRoute>
           </>
         ),
       },
@@ -323,7 +366,6 @@ const router = createBrowserRouter([
     element: <Error />,
   },
 ]);
-
 
 // Main App Component
 function App() {

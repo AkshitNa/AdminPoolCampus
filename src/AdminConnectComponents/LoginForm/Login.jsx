@@ -3,10 +3,11 @@ import axios from "axios";
 import LoginImg from "../../assets/LoginImg.png";
 import Google from "../../assets/Google.png";
 import Facebook from "../../assets/Facebook.png";
+import { toast } from "react-toastify";
 
 // Context
 import { useMyData } from "../../Context/Provider";
-import NovaNector from "../Layout/NovaNector";
+// import NovaNector from "../Layout/NovaNector";
 
 const Login = ({ setLogin, setSignUp }) => {
   // Context Values
@@ -17,12 +18,10 @@ const Login = ({ setLogin, setSignUp }) => {
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setError(""); // Clear error when user starts typing
   };
 
   const handleLogin = async (e) => {
@@ -30,7 +29,7 @@ const Login = ({ setLogin, setSignUp }) => {
     const { username, password } = formData;
 
     if (!username || !password) {
-      setError("Please fill out all fields");
+      toast.error("Please fill out all fields");
       return;
     }
 
@@ -46,13 +45,15 @@ const Login = ({ setLogin, setSignUp }) => {
         loginData.setRegister(true); // Mark user as logged in
         loginData.setUsername(username);
         loginData.setEmail(formData.email);
+        loginData.setPassword(formData.password);
+        toast.success("User login successfully");
         setLogin(false); // Close the login modal
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        setError("Invalid full name or password.");
+        toast.error("Invalid full name or password.");
       } else {
-        setError("An error occurred. Please try again later.");
+        toast.error("An error occurred. Please try again later.");
       }
     }
 
@@ -199,11 +200,6 @@ const Login = ({ setLogin, setSignUp }) => {
                 Login
               </button>
             </form>
-
-            {/* Error message */}
-            {error && (
-              <div className="text-red-500 text-center mt-2">{error}</div>
-            )}
           </div>
 
           {/* Image Column */}

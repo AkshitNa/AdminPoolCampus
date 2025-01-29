@@ -64,7 +64,7 @@ const NavBar = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowProfileBar(false);
+        setArrow(false);
       }
       if (
         moreDropdownRef.current &&
@@ -156,25 +156,12 @@ const NavBar = () => {
                 {showMobileProfileBar && (
                   <div className="absolute top-12 right-8 z-40 mt-2 py-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100">
                     <div className="flex flex-col font-semibold">
-                   
-                      <NavLink
-                        to="/UserAccountInfo"
-                        className={({ isActive }) =>
-                          `${
-                            isActive
-                              ? "text-btn-yellow"
-                              : "text-black hover:text-btn-yellow"
-                          } px-4 py-2 text-sm`
-                        }
-                        onClick={() => {
-                          setShowMobileProfileBar(false);
-                        }}
-                      >
+                      <p className="text-black px-4 py-2 text-sm hover:text-btn-yellow">
                         Hii, {navBarData.username} 😊
-                      </NavLink>
+                      </p>
 
                       <NavLink
-                        to="/UserEditprofile"
+                        to="/userProfile"
                         className={({ isActive }) =>
                           `${
                             isActive
@@ -186,7 +173,7 @@ const NavBar = () => {
                           setShowMobileProfileBar(false);
                         }}
                       >
-                        Edit Profile
+                        Profile
                       </NavLink>
 
                       <NavLink
@@ -449,25 +436,12 @@ const NavBar = () => {
                   {showDesktopProfileBar && (
                     <div className="absolute top-full right-0 z-40 mt-2 py-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100">
                       <div className="flex flex-col font-semibold">
-                     
-                        <NavLink
-                        to="/UserAccountInfo"
-                        className={({ isActive }) =>
-                          `${
-                            isActive
-                              ? "text-btn-yellow"
-                              : "text-btn-green hover:text-btn-yellow"
-                          } px-4 py-2 text-sm`
-                        }
-                        onClick={() => {
-                          setShowDesktopProfileBar(false);
-                        }}
-                      >
-                        Hii, {navBarData.username} 😊
-                      </NavLink>
+                        <p className="text-black px-4 py-2 text-sm hover:text-btn-yellow">
+                          Hii, {navBarData.username} 😊
+                        </p>
 
                         <NavLink
-                          to="/UserEditprofile"
+                          to="/userProfile"
                           className={({ isActive }) =>
                             `${
                               isActive
@@ -479,7 +453,7 @@ const NavBar = () => {
                             setShowDesktopProfileBar(false);
                           }}
                         >
-                          Edit Profile
+                          Profile
                         </NavLink>
 
                         <NavLink

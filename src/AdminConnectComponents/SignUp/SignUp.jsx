@@ -3,7 +3,8 @@ import axios from "axios";
 import SignUpuser from "../../assets/SignUpuser.png";
 import Google from "../../assets/Google.png";
 import Facebook from "../../assets/Facebook.png";
-import NovaNector from "../Layout/NovaNector";
+import { toast } from "react-toastify";
+// import NovaNector from "../Layout/NovaNector";
 
 const SignUp = ({ setSignUp, setLogin }) => {
   const [formData, setFormData] = useState({
@@ -11,13 +12,10 @@ const SignUp = ({ setSignUp, setLogin }) => {
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setError(""); // Clear error when user starts typing
   };
 
   const handleSignUp = async (e) => {
@@ -25,14 +23,14 @@ const SignUp = ({ setSignUp, setLogin }) => {
     const { username, email, password } = formData;
 
     if (!username || !email || !password) {
-      setError("Please fill out all fields");
+      toast.error("Please fill out all fields");
       return;
     }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address");
+      toast.error("Please enter a valid email address");
       return;
     }
 
@@ -44,15 +42,17 @@ const SignUp = ({ setSignUp, setLogin }) => {
       });
 
       if (response.status === 200) {
-        setSuccessMessage("User registered successfully");
+        toast.success("User registered successfully");
         setFormData({
           username: "",
           email: "",
           password: "",
         });
+        setSignUp(false);
+        setLogin(true);
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to register");
+      toast.error(err.response?.data?.message || "Failed to register");
     }
   };
 
@@ -186,17 +186,6 @@ const SignUp = ({ setSignUp, setLogin }) => {
                 />
               </div>
 
-              {/* Error Message */}
-              {error && (
-                <p className="text-red-500 text-xs md:text-sm">{error}</p>
-              )}
-
-              {/* Success Message */}
-              {successMessage && (
-                <p className="text-green-500 text-xs md:text-sm">
-                  {successMessage}
-                </p>
-              )}
 
               {/* Signup Button */}
               <button
