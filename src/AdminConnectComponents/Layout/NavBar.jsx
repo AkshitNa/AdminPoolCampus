@@ -5,336 +5,206 @@ import Bell from "../../assets/Bell.png";
 
 import Login from "../LoginForm/Login";
 import SignUp from "../SignUp/SignUp";
+import FreeConsultationFrom from "../SuperConsultationForm/FreeConsultationFrom";
+
 import React, { useState, useRef, useEffect } from "react";
 import { Menu, X, ChevronUp, ChevronDown } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
-
-import FreeConsultationFrom from "../SuperConsultationForm/FreeConsultationFrom";
-
-// Context
 import { useMyData } from "../../Context/Provider";
 
+// Components
+const ProfileDropdown = ({ username, setRegister, onClose, routes }) => (
+  <div className="absolute top-12 right-8 z-40 mt-2 py-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100">
+    <div className="flex flex-col font-semibold">
+      <p className="text-black px-4 py-2 text-sm hover:text-btn-yellow">
+        Hii, {username} 😊
+      </p>
+      {routes.map(route => (
+        <NavLink
+          key={route.path}
+          to={route.path}
+          className={({ isActive }) =>
+            `${isActive ? "text-btn-yellow" : "text-black hover:text-btn-yellow"} px-4 py-2 text-sm`
+          }
+          onClick={onClose}
+        >
+          {route.label}
+        </NavLink>
+      ))}
+      <p
+        className="px-4 py-2 text-sm hover:bg-gray-100 hover:text-btn-yellow cursor-pointer"
+        onClick={() => setRegister(false)}
+      >
+        Log out
+      </p>
+    </div>
+  </div>
+);
+
 const NavBar = () => {
-  // Context Values
   const navBarData = useMyData();
-
-  // State to manage sticky navbar
   const [isSticky, setIsSticky] = useState(false);
-
-  // Show Profile Drop Down Bar
   const [showMobileProfileBar, setShowMobileProfileBar] = useState(false);
   const [showDesktopProfileBar, setShowDesktopProfileBar] = useState(false);
-
-  //Login And Sign Up Form
   const [login, setLogin] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [freeConsultation, setFreeConsultation] = useState(false);
-
-  //More
   const [arrow, setArrow] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   const dropdownRef = useRef(null);
   const moreDropdownRef = useRef(null);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const profileRoutes = [
+    { path: "/userProfile", label: "Profile" },
+    { path: "/UserPurchases", label: "Purchases" },
+    { path: "/UserLanguage", label: "Languages" }
+  ];
 
-  const handleArrow = () => {
-    setArrow(!arrow);
-  };
-
-  // Handle sticky navbar effect
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsSticky(true); // Make navbar sticky after scrolling 50px
-      } else {
-        setIsSticky(false);
+    const handleScroll = () => setIsSticky(window.scrollY > 50);
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowMobileProfileBar(false);
+        setShowDesktopProfileBar(false);
+      }
+      if (moreDropdownRef.current && !moreDropdownRef.current.contains(event.target)) {
+        setArrow(false);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
+    document.addEventListener("mousedown", handleClickOutside);
+    
     return () => {
       window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setArrow(false);
-      }
-      if (
-        moreDropdownRef.current &&
-        !moreDropdownRef.current.contains(event.target)
-      ) {
-        setArrow(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  return (
-    <div
-      className={`p-4 bg-orange-light min-w-full mx-auto ${
-        isSticky ? "sticky top-0 bg-orange-light z-20" : ""
-      }`}
-    >
-      <div
-        className={
-          "bg-gray-50 min-w-full font-kumbh relative flex flex-col md:flex-row md:flex-shrink justify-between items-center py-3 px-[3rem] border-2 border-btn-yellow rounded-3xl overflow-visible md:overflow-scroll lg:overflow-visible z-20"
-        }
+  const AuthButtons = ({ isMobile = false }) => (
+    <div className={`flex gap-${isMobile ? '[0.5rem]' : '[1rem]'}`}>
+      <button
+        className={`bg-btn-yellow py-${isMobile ? '1' : '2'} px-${isMobile ? '1' : '0'} w-${isMobile ? '[4rem]' : '[5.5rem]'} text-wrap text-white rounded-md hover:bg-opacity-90 transition-colors text-${isMobile ? 'xs' : 'base'}`}
+        onClick={() => setSignUp(true)}
       >
-        {/* Logo & Title - Always visible */}
+        Sign Up
+      </button>
+      <button
+        className={`bg-white py-${isMobile ? '1' : '2'} w-${isMobile ? '[3rem]' : '[5.5rem]'} text-wrap text-btn-green border-2 border-btn-green rounded-md hover:bg-gray-50 transition-colors text-${isMobile ? 'xs' : 'base'}`}
+        onClick={() => setLogin(true)}
+      >
+        Log In
+      </button>
+    </div>
+  );
+
+  return (
+    <div className={`p-4 bg-orange-light min-w-full mx-auto ${isSticky ? "sticky top-0 bg-orange-light z-20" : ""}`}>
+      <div className="bg-gray-50 min-w-full font-kumbh relative flex flex-col md:flex-row md:flex-shrink justify-between items-center py-3 px-[3rem] border-2 border-btn-yellow rounded-3xl overflow-visible md:overflow-scroll lg:overflow-visible z-20">
+        {/* Header Section */}
         <div className="flex w-full justify-around gap-3 md:gap-0 md:justify-between items-center">
-          {/* Logo of NovaNector */}
-          <div className="flex items-center">
-            <div>
-              <Link to="/">
-                <img
-                  src={NovaNectarBlueBlack}
-                  alt="NovaNectar"
-                  className="min-w-8 min-h-8 md:w-10 md:h-10 object-contain"
-                />
-              </Link>
-            </div>
+          {/* Logo */}
+          <Link to="/" className="flex items-center">
+            <img
+              src={NovaNectarBlueBlack}
+              alt="NovaNectar"
+              className="min-w-8 min-h-8 md:w-10 md:h-10 object-contain"
+            />
             <div className="hidden sm:block">
-              <p className="font-semibold text-nova-blue ml-2 text-base sm:text-lg">
-                NOVANECTAR
-              </p>
-              <p className="font-kumbh font-semibold ml-2 text-xs sm:text-sm">
-                SERVICESPVT.LTD.
-              </p>
+              <p className="font-semibold text-nova-blue ml-2 text-base sm:text-lg">NOVANECTAR</p>
+              <p className="font-kumbh font-semibold ml-2 text-xs sm:text-sm">SERVICESPVT.LTD.</p>
             </div>
-          </div>
+          </Link>
 
-          {/* Only Visible On Mobile View */}
-          {/* Login-LogOut Bell User */}
-          {!navBarData.register ? (
-            <div className="block md:hidden">
-              <div className="flex gap-[0.5rem]">
-                <button
-                  className="bg-btn-yellow py-1 px-1 w-[4rem] text-wrap text-white rounded-md hover:bg-opacity-90 transition-colors text-xs"
-                  onClick={() => setSignUp(true)}
-                >
-                  Sign Up
-                </button>
-                <button
-                  className="bg-white py-1 w-[3rem] text-wrap text-btn-green border-2 border-btn-green rounded-md hover:bg-gray-50 transition-colors text-xs"
-                  onClick={() => setLogin(true)}
-                >
-                  Log In
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="block md:hidden">
-              <div className="flex items-center gap-4">
-                <div>
-                  <img src={Bell} alt="Bell" className="w-8 h-6" />
-                </div>
-                <div ref={dropdownRef}>
-                  <img
-                    src={LoginUser}
-                    alt="LoginUser"
-                    className="w-6 h-6 cursor-pointer"
-                    onClick={() => {
-                      setShowMobileProfileBar(!showMobileProfileBar);
-                      console.log(
-                        "Value of ProfileBar Mobile: " + showMobileProfileBar
-                      );
-                    }}
-                  />
-                </div>
-
+          {/* Mobile Auth */}
+          <div className="block md:hidden">
+            {!navBarData.register ? (
+              <AuthButtons isMobile={true} />
+            ) : (
+              <div className="flex items-center gap-4" ref={dropdownRef}>
+                <img src={Bell} alt="Bell" className="w-8 h-6" />
+                <img
+                  src={LoginUser}
+                  alt="LoginUser"
+                  className="w-6 h-6 cursor-pointer"
+                  onClick={() => setShowMobileProfileBar(!showMobileProfileBar)}
+                />
                 {showMobileProfileBar && (
-                  <div className="absolute top-12 right-8 z-40 mt-2 py-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100">
-                    <div className="flex flex-col font-semibold">
-                      <p className="text-black px-4 py-2 text-sm hover:text-btn-yellow">
-                        Hii, {navBarData.username} 😊
-                      </p>
-
-                      <NavLink
-                        to="/userProfile"
-                        className={({ isActive }) =>
-                          `${
-                            isActive
-                              ? "text-btn-yellow"
-                              : "text-black hover:text-btn-yellow"
-                          } px-4 py-2 text-sm`
-                        }
-                        onClick={() => {
-                          setShowMobileProfileBar(false);
-                        }}
-                      >
-                        Profile
-                      </NavLink>
-
-                      <NavLink
-                        to="/UserPurchases"
-                        className={({ isActive }) =>
-                          `${
-                            isActive
-                              ? "text-btn-yellow"
-                              : "text-black hover:text-btn-yellow"
-                          } px-4 py-2 text-sm`
-                        }
-                        onClick={() => {
-                          setShowMobileProfileBar(false);
-                        }}
-                      >
-                        Purchases
-                      </NavLink>
-
-                      <NavLink
-                        to="/UserLanguage"
-                        className={({ isActive }) =>
-                          `${
-                            isActive
-                              ? "text-btn-yellow"
-                              : "text-black hover:text-btn-yellow"
-                          } px-4 py-2 text-sm`
-                        }
-                        onClick={() => {
-                          setShowMobileProfileBar(false);
-                        }}
-                      >
-                        Languages
-                      </NavLink>
-
-                      <p
-                        className="px-4 py-2 text-sm hover:bg-gray-100 hover:text-btn-yellow cursor-pointer"
-                        onClick={() => {
-                          navBarData.setRegister(false);
-                        }}
-                      >
-                        Log out
-                      </p>
-                    </div>
-                  </div>
+                  <ProfileDropdown
+                    username={navBarData.username}
+                    setRegister={navBarData.setRegister}
+                    onClose={() => setShowMobileProfileBar(false)}
+                    routes={profileRoutes}
+                  />
                 )}
               </div>
-            </div>
-          )}
-
-          {/* Mobile Menu Button */}
-          <div>
-            <button
-              className="md:hidden p-3 rounded-lg hover:bg-gray-100"
-              onClick={toggleMenu}
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? (
-                <X className="h-8 w-8 text-gray-800" />
-              ) : (
-                <Menu className="h-8 w-8 text-gray-800" />
-              )}
-            </button>
+            )}
           </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="md:hidden p-3 rounded-lg hover:bg-gray-100"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <X className="h-8 w-8 text-gray-800" />
+            ) : (
+              <Menu className="h-8 w-8 text-gray-800" />
+            )}
+          </button>
         </div>
 
-        {/* Mobile Menu and Desktop Content */}
-        <div
-          className={`${
-            isMenuOpen ? "flex" : "hidden"
-          } flex-col md:flex md:flex-row items-center gap-[1rem] w-full mt-3 md:mt-0`}
-        >
+        {/* Navigation Content */}
+        <div className={`${isMenuOpen ? "flex" : "hidden"} flex-col md:flex md:flex-row items-center gap-[1rem] w-full mt-3 md:mt-0`}>
           {/* Search Bar */}
           <div className="flex min-w-[4rem] gap-1 p-0.5 ml-2 border-2 border-btn-yellow rounded-md w-[13rem] md:w-[18rem] order-2 md:order-1">
-            <div className="flex-grow">
-              <input
-                type="search"
-                className="p-2 w-full bg-transparent outline-none text-base md:text-md"
-                placeholder="Explore Courses"
-              />
-            </div>
-            <div>
-              <img
-                src={SearchButton}
-                alt="SearchButton"
-                className="w-10 h-9 mb-[0.2rem]  sm:w-8 sm:h-8 sm:mb-[0rem] object-cover mt-1"
-              />
-            </div>
+            <input
+              type="search"
+              className="p-2 w-full bg-transparent outline-none text-base md:text-md"
+              placeholder="Explore Courses"
+            />
+            <img
+              src={SearchButton}
+              alt="SearchButton"
+              className="w-10 h-9 mb-[0.2rem] sm:w-8 sm:h-8 sm:mb-[0rem] object-cover mt-1"
+            />
           </div>
 
-          {/* Navigation Links */}
+          {/* Nav Links */}
           <div className="flex flex-col md:flex-row font-semibold items-center gap-2 md:gap-6 w-full md:w-auto order-1 md:order-2">
-            <div className="hover:text-btn-yellow cursor-pointer w-full md:w-[3rem] text-center py-2 md:py-0 text-sm md:text-lg">
-              <NavLink
-                to="/AdminConnect"
-                className={({ isActive }) =>
+            <NavLink
+              to="/AdminConnect"
+              className={({ isActive }) =>
+                `hover:text-btn-yellow cursor-pointer w-full md:w-[3rem] text-center py-2 md:py-0 text-sm md:text-lg ${
                   isActive ? "text-btn-yellow" : "text-black"
-                }
-                onClick={toggleMenu}
-              >
-                Home
-              </NavLink>
-            </div>
+                }`
+              }
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </NavLink>
 
+            {/* Conditional Nav Links */}
             {navBarData.adminPool && (
-              <div className="hover:text-btn-yellow cursor-pointer w-full md:w-[9rem] text-center py-2 md:py-0 text-sm md:text-lg">
-                <NavLink
-                  to="/AdminConnectMain"
-                  className={({ isActive }) =>
+              <NavLink
+                to="/AdminConnectMain"
+                className={({ isActive }) =>
+                  `hover:text-btn-yellow cursor-pointer w-full md:w-[9rem] text-center py-2 md:py-0 text-sm md:text-lg ${
                     isActive ? "text-btn-yellow" : "text-black"
-                  }
-                  onClick={toggleMenu}
-                >
-                  Admin Connect
-                </NavLink>
-              </div>
+                  }`
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Admin Connect
+              </NavLink>
             )}
 
-            {navBarData.campusPool && (
-              <div className="hover:text-btn-yellow cursor-pointer w-full md:w-[9rem] text-center py-2 md:py-0 text-sm md:text-lg">
-                <NavLink
-                  to="/PoolCampusMain"
-                  className={({ isActive }) =>
-                    isActive ? "text-btn-yellow" : "text-black"
-                  }
-                  onClick={toggleMenu}
-                >
-                  Pool Campus
-                </NavLink>
-              </div>
-            )}
-
-            {navBarData.adminPool ? (
-              <div className="hover:text-btn-yellow cursor-pointer w-full md:w-[5rem] text-center py-2 md:py-0 text-sm md:text-lg">
-                <NavLink
-                  to="/about"
-                  className={({ isActive }) =>
-                    isActive ? "text-btn-yellow" : "text-black"
-                  }
-                  onClick={toggleMenu}
-                >
-                  About Us
-                </NavLink>
-              </div>
-            ) : (
-              <div className="hover:text-btn-yellow cursor-pointer w-full md:w-[5rem] text-center py-2 md:py-0 text-sm md:text-lg">
-                <NavLink
-                  to="/aboutCampus"
-                  className={({ isActive }) =>
-                    isActive ? "text-btn-yellow" : "text-black"
-                  }
-                  onClick={toggleMenu}
-                >
-                  About Us
-                </NavLink>
-              </div>
-            )}
-
+            {/* More Dropdown */}
             <div ref={moreDropdownRef} className="relative w-full md:w-auto">
               <div
                 className="hover:text-btn-yellow cursor-pointer w-full md:w-auto text-center py-2 md:py-0 text-xs md:text-lg flex items-center justify-center gap-1"
-                onClick={handleArrow}
+                onClick={() => setArrow(!arrow)}
               >
                 More
                 {arrow ? (
@@ -346,195 +216,80 @@ const NavBar = () => {
 
               {arrow && (
                 <div className="md:absolute z-50 md:mt-2 w-full md:w-40 bg-white rounded-lg shadow-lg border border-gray-100">
-                  <div className="flex flex-col">
-                    <NavLink
-                      to="/contactUs"
-                      className={({ isActive }) =>
-                        `${
-                          isActive
-                            ? "text-btn-yellow"
-                            : "text-black hover:text-btn-yellow"
-                        } px-4 py-2 text-sm text-center md:text-left`
-                      }
-                      onClick={() => setArrow(false)}
-                    >
-                      Contact
-                    </NavLink>
-
-                    {navBarData.adminPool ? (
-                      <>
-                        <NavLink
-                          to="/blog"
-                          className={({ isActive }) =>
-                            `${
-                              isActive
-                                ? "text-btn-yellow"
-                                : "text-black hover:text-btn-yellow"
-                            } px-4 py-2 text-sm text-center md:text-left`
-                          }
-                          onClick={() => setArrow(false)}
-                        >
-                          Blog
-                        </NavLink>
-                      </>
-                    ) : (
-                      <>
-                        <NavLink
-                          to="/blogCampus"
-                          className={({ isActive }) =>
-                            `${
-                              isActive
-                                ? "text-btn-yellow"
-                                : "text-black hover:text-btn-yellow"
-                            } px-4 py-2 text-sm text-center md:text-left`
-                          }
-                          onClick={() => setArrow(false)}
-                        >
-                          Blog
-                        </NavLink>
-                      </>
-                    )}
-
-                    <p
-                      className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 hover:text-btn-yellow text-center md:text-left"
-                      onClick={() => {
-                        setArrow(false);
-                        setFreeConsultation(true);
-                      }}
-                    >
-                      Free Consultation
-                    </p>
-                  </div>
+                  <NavLink
+                    to="/contactUs"
+                    className={({ isActive }) =>
+                      `${
+                        isActive ? "text-btn-yellow" : "text-black hover:text-btn-yellow"
+                      } px-4 py-2 text-sm text-center md:text-left block`
+                    }
+                    onClick={() => setArrow(false)}
+                  >
+                    Contact
+                  </NavLink>
+                  <NavLink
+                    to={navBarData.adminPool ? "/blog" : "/blogCampus"}
+                    className={({ isActive }) =>
+                      `${
+                        isActive ? "text-btn-yellow" : "text-black hover:text-btn-yellow"
+                      } px-4 py-2 text-sm text-center md:text-left block`
+                    }
+                    onClick={() => setArrow(false)}
+                  >
+                    Blog
+                  </NavLink>
+                  <button
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 hover:text-btn-yellow"
+                    onClick={() => {
+                      setArrow(false);
+                      setFreeConsultation(true);
+                    }}
+                  >
+                    Free Consultation
+                  </button>
                 </div>
               )}
             </div>
           </div>
 
-          {/* SignUp/LogIn Buttons */}
-          <div className="flex gap-4 w-full md:w-auto justify-center md:justify-end order-3">
+          {/* Desktop Auth */}
+          <div className="hidden sm:block order-3">
             {navBarData.register ? (
-              <div className="hidden sm:block">
-                <div className="flex items-center gap-4">
-                  <div>
-                    <img
-                      src={Bell}
-                      alt="Bell"
-                      className="w-12 h-8 md:w-12 md:h-8 lg:w-14 lg:h-10 xl:w-12 xl:h-8"
-                    />
-                  </div>
-                  <div ref={dropdownRef}>
-                    <img
-                      src={LoginUser}
-                      alt="LoginUser"
-                      className="w-12 h-8 md:w-12 md:h-8 lg:w-14 lg:h-10 xl:w-11 xl:h-8 cursor-pointer"
-                      onClick={() =>
-                        setShowDesktopProfileBar(!showDesktopProfileBar)
-                      }
-                    />
-                  </div>
-
-                  {showDesktopProfileBar && (
-                    <div className="absolute top-full right-0 z-40 mt-2 py-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100">
-                      <div className="flex flex-col font-semibold">
-                        <p className="text-black px-4 py-2 text-sm hover:text-btn-yellow">
-                          Hii, {navBarData.username} 😊
-                        </p>
-
-                        <NavLink
-                          to="/userProfile"
-                          className={({ isActive }) =>
-                            `${
-                              isActive
-                                ? "text-btn-yellow"
-                                : "text-black hover:text-btn-yellow"
-                            } px-4 py-2 text-sm`
-                          }
-                          onClick={() => {
-                            setShowDesktopProfileBar(false);
-                          }}
-                        >
-                          Profile
-                        </NavLink>
-
-                        <NavLink
-                          to="/UserPurchases"
-                          className={({ isActive }) =>
-                            `${
-                              isActive
-                                ? "text-btn-yellow"
-                                : "text-black hover:text-btn-yellow"
-                            } px-4 py-2 text-sm`
-                          }
-                          onClick={() => {
-                            setShowDesktopProfileBar(false);
-                          }}
-                        >
-                          Purchases
-                        </NavLink>
-
-                        <NavLink
-                          to="/UserLanguage"
-                          className={({ isActive }) =>
-                            `${
-                              isActive
-                                ? "text-btn-yellow"
-                                : "text-black hover:text-btn-yellow"
-                            } px-4 py-2 text-sm`
-                          }
-                          onClick={() => {
-                            setShowDesktopProfileBar(false);
-                          }}
-                        >
-                          Languages
-                        </NavLink>
-
-                        <p
-                          className="px-4 py-2 text-sm hover:bg-gray-100 hover:text-btn-yellow cursor-pointer"
-                          onClick={() => {
-                            navBarData.setRegister(false);
-                          }}
-                        >
-                          Log out
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
+              <div className="flex items-center gap-4" ref={dropdownRef}>
+                <img src={Bell} alt="Bell" className="w-12 h-8 md:w-12 md:h-8 lg:w-14 lg:h-10 xl:w-12 xl:h-8" />
+                <img
+                  src={LoginUser}
+                  alt="LoginUser"
+                  className="w-12 h-8 md:w-12 md:h-8 lg:w-14 lg:h-10 xl:w-11 xl:h-8 cursor-pointer"
+                  onClick={() => setShowDesktopProfileBar(!showDesktopProfileBar)}
+                />
+                {showDesktopProfileBar && (
+                  <ProfileDropdown
+                    username={navBarData.username}
+                    setRegister={navBarData.setRegister}
+                    onClose={() => setShowDesktopProfileBar(false)}
+                    routes={profileRoutes}
+                  />
+                )}
               </div>
             ) : (
-              <div className="hidden sm:block">
-                <div className="flex gap-[1rem]">
-                  <button
-                    className="bg-btn-yellow py-2 w-[5.5rem] text-wrap text-white rounded-md hover:bg-opacity-90 transition-colors text-md sm:text-base"
-                    onClick={() => setSignUp(true)}
-                  >
-                    Sign Up
-                  </button>
-                  <button
-                    className="bg-white py-2 w-[5.5rem] text-wrap text-btn-green border-2 border-btn-green rounded-md hover:bg-gray-50 transition-colors text-md sm:text-base"
-                    onClick={() => setLogin(true)}
-                  >
-                    Log In
-                  </button>
-                </div>
-              </div>
+              <AuthButtons />
             )}
           </div>
         </div>
       </div>
 
+      {/* Modals */}
       {login && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30">
           <Login setLogin={setLogin} setSignUp={setSignUp} />
         </div>
       )}
-
       {signUp && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30">
           <SignUp setSignUp={setSignUp} setLogin={setLogin} />
         </div>
       )}
-
       {freeConsultation && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30">
           <FreeConsultationFrom setFreeConsultation={setFreeConsultation} />
