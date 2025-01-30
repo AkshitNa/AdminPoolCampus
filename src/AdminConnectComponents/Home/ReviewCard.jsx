@@ -69,8 +69,8 @@ export const ReviewCard = () => {
   const progress = ((activeItem + (isMobile ? 6 : 2)) / totalSteps) * 50;
 
   return (
-    <div className="bg-orange-light pb-14">
-      <div className="bg-orange-light relative w-full max-w-full py-5 mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="bg-orange-light pb-10">
+      <div className="bg-orange-light relative w-full md:w-[70rem] max-w-full py-5 mx-auto px-4 sm:px-6 lg:px-8">
         <p className="text-center font-lato text-3xl sm:text-4xl my-5 text-white font-semibold">
           <span className="text-black">Review From </span> <span className="text-btn-green">Students </span>
         </p>
@@ -84,7 +84,7 @@ export const ReviewCard = () => {
             {reviews.map((review, index) => (
               <div
                 key={index}
-                className={`flex-shrink-0 transition-opacity duration-700 ${
+                className={`flex-shrink-0 transition-opacity duration-700 -mr-[1rem] md:-mr-0 ${
                   isMobile ? 'w-full' : 'w-1/2'
                 }`}
                 style={{ 
@@ -119,7 +119,7 @@ export const ReviewCard = () => {
         </div>
 
         {/* Navigation Buttons and Sliding Bar */}
-        <div className="flex items-center justify-center gap-4 mx-auto">
+        <div className="flex items-center justify-center gap-1 mx-auto">
           <button
             type="button"
             className="p-1 sm:p-2 cursor-pointer group focus:outline-none"
