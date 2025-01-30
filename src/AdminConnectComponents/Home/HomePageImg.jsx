@@ -60,7 +60,7 @@ export const HomePageImg = () => {
                     <img
                       src={Dots2}
                       alt="Dots 2 Horizontal"
-                      className="w-[2rem] h-[2rem]"
+                      className="w-[2rem] h-[2rem] sm:block hidden"
                     />
                  
                 </div>
