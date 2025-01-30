@@ -1,5 +1,5 @@
 import ReviewImg from "../../assets/ReviewImg.png";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export const ReviewCard = () => {
   const [activeItem, setActiveItem] = useState(0);
@@ -44,7 +44,7 @@ export const ReviewCard = () => {
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -63,13 +63,18 @@ export const ReviewCard = () => {
     setActiveItem((prev) => (prev === 0 ? reviews.length - increment : prev - increment));
   };
 
+  // Calculate progress for the sliding bar
+  const totalSteps = isMobile ? reviews.length : Math.ceil(reviews.length / 2);
+
+  const progress = ((activeItem + (isMobile ? 6 : 2)) / totalSteps) * 50;
+
   return (
     <div className="bg-orange-light pb-14">
       <div className="bg-orange-light relative w-full max-w-full py-5 mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-center font-lato text-4xl my-5 text-white font-semibold">
+        <p className="text-center font-lato text-3xl sm:text-4xl my-5 text-white font-semibold">
           <span className="text-black">Review From </span> <span className="text-btn-green">Students </span>
         </p>
-        <div className="relative h-[28rem] sm:h-[24rem] md:h-[20rem] lg:h-72 overflow-hidden rounded-lg mb-5 px-10">
+        <div className="relative h-[28rem] sm:h-[24rem] md:h-[20rem] lg:h-72 overflow-hidden rounded-lg mb-5 px-4 sm:px-10">
           <div 
             className="flex gap-4 h-full transition-all duration-700 ease-in-out"
             style={{ 
@@ -89,7 +94,7 @@ export const ReviewCard = () => {
                 }}
               >
                 <div className="bg-gray-100 h-full w-full p-4 sm:p-5 rounded-lg">
-                  <div className="text-sm sm:text-md text-black mb-3 sm:mb-4 overflow-y-auto mx-5 max-h-[60%] sm:max-h-[50%]">
+                  <div className="text-sm sm:text-md text-black mb-3 sm:mb-4 overflow-y-auto mx-2 sm:mx-5 max-h-[60%] sm:max-h-[50%]">
                     {review.text}
                   </div>
                   <div className="flex items-center mt-2 sm:mt-3 ml-2 sm:ml-3">
@@ -113,8 +118,8 @@ export const ReviewCard = () => {
           </div>
         </div>
 
-        {/* Navigation Buttons */}
-        <div className="flex justify-center gap-10 mx-auto">
+        {/* Navigation Buttons and Sliding Bar */}
+        <div className="flex items-center justify-center gap-4 mx-auto">
           <button
             type="button"
             className="p-1 sm:p-2 cursor-pointer group focus:outline-none"
@@ -139,6 +144,14 @@ export const ReviewCard = () => {
               </svg>
             </span>
           </button>
+
+          {/* Sliding Bar */}
+          <div className="w-[1.5rem] md:w-[5rem] h-2 bg-gray-300 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-btn-yellow rounded-full transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
 
           <button
             type="button"

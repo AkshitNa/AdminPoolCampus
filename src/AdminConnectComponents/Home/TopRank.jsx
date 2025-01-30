@@ -62,10 +62,10 @@ export const TopRank = () => {
             ))}
 
             {/* Custom Navigation Buttons */}
-            <div className="swiper-button-prev !hidden sm:!flex !w-10 !h-10 !bg-btn-green !rounded-full !text-white after:!text-lg group-hover:!opacity-100 !opacity-0 transition-opacity duration-300 !-left-5">
+            {/* <div className="swiper-button-prev !hidden sm:!flex !w-10 !h-10 !bg-btn-green !rounded-full !text-white after:!text-lg group-hover:!opacity-100 !opacity-0 transition-opacity duration-300 !-left-5">
             </div>
             <div className="swiper-button-next !hidden sm:!flex !w-10 !h-10 !bg-btn-green !rounded-full !text-white after:!text-lg group-hover:!opacity-100 !opacity-0 transition-opacity duration-300 !-right-5">
-            </div>
+            </div> */}
           </Swiper>
 
           {/* Custom Pagination Styles */}
