@@ -83,15 +83,15 @@ const NavBar = () => {
   }, []);
 
   const AuthButtons = ({ isMobile = false }) => (
-    <div className={`flex gap-${isMobile ? '[0.5rem]' : '[1rem]'}`}>
+    <div className={`flex gap-1 md:gap-3 ${isMobile ? 'flex-row' : 'flex-row'}`}>
       <button
-        className={`bg-btn-yellow py-${isMobile ? '1' : '2'} px-${isMobile ? '1' : '0'} w-${isMobile ? '[4rem]' : '[5.5rem]'} text-wrap text-white rounded-md hover:bg-opacity-90 transition-colors text-${isMobile ? 'xs' : 'base'}`}
+        className={`bg-btn-yellow py-1 md:py-2 px-2 md:px-3 w-[4rem] md:w-[5.5rem] text-white rounded-md hover:bg-opacity-90 transition-colors text-xs md:text-sm`}
         onClick={() => setSignUp(true)}
       >
         Sign Up
       </button>
       <button
-        className={`bg-white py-${isMobile ? '1' : '2'} w-${isMobile ? '[3rem]' : '[5.5rem]'} text-wrap text-btn-green border-2 border-btn-green rounded-md hover:bg-gray-50 transition-colors text-${isMobile ? 'xs' : 'base'}`}
+        className={`bg-white py-1 md:py-2 px-2 md:px-3 w-[4rem] md:w-[5.5rem] text-btn-green border-2 border-btn-green rounded-md hover:bg-gray-50 transition-colors text-xs md:text-sm`}
         onClick={() => setLogin(true)}
       >
         Log In
@@ -101,9 +101,9 @@ const NavBar = () => {
 
   return (
     <div className={`p-4 bg-orange-light min-w-full mx-auto ${isSticky ? "sticky top-0 bg-orange-light z-20" : ""}`}>
-      <div className="bg-gray-50 min-w-full font-kumbh relative flex flex-col md:flex-row md:flex-shrink justify-between items-center py-3 px-[3rem] border-2 border-btn-yellow rounded-3xl overflow-visible md:overflow-scroll lg:overflow-visible z-20">
+      <div className="bg-gray-50 min-w-full font-kumbh relative flex flex-col md:flex-row justify-between items-center py-3 px-[3rem] border-2 border-btn-yellow rounded-3xl overflow-visible md:overflow-scroll lg:overflow-visible z-20">
         {/* Header Section */}
-        <div className="flex w-full justify-around gap-3 md:gap-0 md:justify-between items-center">
+        <div className="flex w-full justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img
@@ -156,7 +156,7 @@ const NavBar = () => {
         </div>
 
         {/* Navigation Content */}
-        <div className={`${isMenuOpen ? "flex" : "hidden"} flex-col md:flex md:flex-row items-center gap-[1rem] w-full mt-3 md:mt-0`}>
+        <div className={`${isMenuOpen ? "flex" : "hidden"} flex-col md:flex md:flex-row items-center gap-4 w-full mt-3 md:mt-0`}>
           {/* Search Bar */}
           <div className="flex min-w-[4rem] gap-1 p-0.5 ml-2 border-2 border-btn-yellow rounded-md w-[13rem] md:w-[18rem] order-2 md:order-1">
             <input
@@ -239,7 +239,7 @@ const NavBar = () => {
                     Blog
                   </NavLink>
                   <button
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 hover:text-btn-yellow"
+                    className="w-full text-center lg:text-left px-4 py-2 text-sm hover:bg-gray-100 hover:text-btn-yellow"
                     onClick={() => {
                       setArrow(false);
                       setFreeConsultation(true);
@@ -253,7 +253,7 @@ const NavBar = () => {
           </div>
 
           {/* Desktop Auth */}
-          <div className="hidden sm:block order-3">
+          <div className="hidden md:block order-3">
             {navBarData.register ? (
               <div className="flex items-center gap-4" ref={dropdownRef}>
                 <img src={Bell} alt="Bell" className="w-12 h-8 md:w-12 md:h-8 lg:w-14 lg:h-10 xl:w-12 xl:h-8" />
